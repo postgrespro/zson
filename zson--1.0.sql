@@ -1,0 +1,35 @@
+-- complain if script is sourced in psql, rather than via CREATE EXTENSION
+\echo Use "CREATE EXTENSION zson" to load this file. \quit
+
+CREATE TYPE zson;
+
+CREATE FUNCTION zson_in(cstring)
+	RETURNS zson
+	AS 'MODULE_PATHNAME'
+	LANGUAGE C STRICT IMMUTABLE;
+
+CREATE FUNCTION zson_out(zson)
+	RETURNS cstring
+	AS 'MODULE_PATHNAME'
+	LANGUAGE C STRICT IMMUTABLE;
+
+CREATE TYPE zson (
+	INTERNALLENGTH = -1,
+	INPUT = zson_in,
+	OUTPUT = zson_out,
+	STORAGE = extended
+);
+
+CREATE FUNCTION z2j(zson)
+	RETURNS jsonb
+	AS 'MODULE_PATHNAME'
+	LANGUAGE C STRICT IMMUTABLE;
+
+CREATE FUNCTION j2z(jsonb)
+	RETURNS zson
+	AS 'MODULE_PATHNAME'
+	LANGUAGE C STRICT IMMUTABLE;
+
+CREATE CAST (zson AS jsonb) WITH FUNCTION z2j(zson) AS IMPLICIT;
+CREATE CAST (jsonb AS zson) WITH FUNCTION j2z(jsonb) AS ASSIGNMENT;
+

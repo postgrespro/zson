@@ -1,0 +1,13 @@
+CREATE EXTENSION zson;
+SELECT '{"a": true}'::zson;
+    zson     
+-------------
+ {"a": true}
+(1 row)
+
+SELECT '{"a": true}'::zson -> 'a';
+ ?column? 
+----------
+ true
+(1 row)
+
