@@ -4,14 +4,9 @@ DATA = zson--1.0.sql
 OBJS = zson.o
 REGRESS = zson
 
-ifdef USE_PGXS
+MODULE_big = zson
+PG_CPPFLAGS = -g -O2
+SHLIB_LINK = # -lz -llz4
+
 PGXS := $(shell pg_config --pgxs)
 include $(PGXS)
-else
-subdir = contrib/zson
-top_builddir = ../..
-include $(top_builddir)/src/Makefile.global
-include $(top_srcdir)/contrib/contrib-global.mk
-endif
-
-

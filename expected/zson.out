@@ -1,13 +1,111 @@
 CREATE EXTENSION zson;
-SELECT '{"a": true}'::zson;
-    zson     
--------------
- {"a": true}
+SELECT zson_extract_strings('true');
+ zson_extract_strings 
+----------------------
+ {}
 (1 row)
 
-SELECT '{"a": true}'::zson -> 'a';
+SELECT zson_extract_strings('"aaa"');
+ zson_extract_strings 
+----------------------
+ {aaa}
+(1 row)
+
+SELECT zson_extract_strings('["some", ["dummy", "array"], 456, false]');
+ zson_extract_strings 
+----------------------
+ {some,dummy,array}
+(1 row)
+
+SELECT zson_extract_strings('{"IP":"10.0.0.3","Roles":["master", "slave"]}');
+       zson_extract_strings       
+----------------------------------
+ {IP,Roles,10.0.0.3,master,slave}
+(1 row)
+
+CREATE TABLE nocompress(x jsonb);
+INSERT INTO nocompress VALUES
+('true'),
+('123'),
+('"aaa"'),
+('["some", ["dummy", "array"], 456, false]'),
+('
+[
+{"ModifyIndex":1,"IP":"10.0.0.1","Roles":["master"]},
+{"ModifyIndex":2,"IP":"10.0.0.2","Roles":["slave"]},
+{"ModifyIndex":3,"IP":"10.0.0.3","Roles":["master", "slave"]}
+]
+');
+SELECT zson_learn('{{"nocompress", "x"}}');
+                                  zson_learn                                   
+-------------------------------------------------------------------------------
+ Done! Run " select * from zson_dict where dict_id = 0; " to see a dictionary.
+(1 row)
+
+SELECT * FROM zson_dict;
+ dict_id | word_id |    word     
+---------+---------+-------------
+       0 |       1 | Roles
+       0 |       2 | ModifyIndex
+       0 |       3 | IP
+       0 |       4 | slave
+       0 |       5 | master
+(5 rows)
+
+SELECT zson_learn('{{"nocompress", "x"}}', 10000, 1, 128, 1);
+                                  zson_learn                                   
+-------------------------------------------------------------------------------
+ Done! Run " select * from zson_dict where dict_id = 1; " to see a dictionary.
+(1 row)
+
+SELECT * FROM zson_dict;
+ dict_id | word_id |    word     
+---------+---------+-------------
+       0 |       1 | Roles
+       0 |       2 | ModifyIndex
+       0 |       3 | IP
+       0 |       4 | slave
+       0 |       5 | master
+       1 |       1 | Roles
+       1 |       2 | IP
+       1 |       3 | ModifyIndex
+       1 |       4 | master
+       1 |       5 | slave
+       1 |       6 | 10.0.0.1
+       1 |       7 | array
+       1 |       8 | 10.0.0.2
+       1 |       9 | aaa
+       1 |      10 | some
+       1 |      11 | dummy
+       1 |      12 | 10.0.0.3
+(17 rows)
+
+SELECT '{"aaa": "ololo"}'::zson;
+       zson       
+------------------
+ {"aaa": "ololo"}
+(1 row)
+
+SELECT '{"aaa": "ololo"}'::zson -> 'aaa';
  ?column? 
 ----------
- true
+ "ololo"
 (1 row)
 
+CREATE TABLE zson_test(x zson);
+INSERT INTO zson_test VALUES('{"aaa":123}' :: jsonb);
+SELECT * FROM zson_test;
+      x       
+--------------
+ {"aaa": 123}
+(1 row)
+
+SELECT x :: jsonb FROM zson_test;
+      x       
+--------------
+ {"aaa": 123}
+(1 row)
+
+DROP TABLE zson_test;
+DROP TABLE nocompress;
+DROP EXTENSION zson;
