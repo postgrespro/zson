@@ -4,7 +4,7 @@
 
 ZSON is a PostgreSQL extension for transparent JSONB compression. Compression is based on a shared dictionary of strings most frequently used in specific JSONB documents (not only keys, but also values, array elements, etc). ZSON allows to safe ~ 50% of disk space and gain more TPS because of lower I/O. Memory is saved as well.
 
-ZSON was originally created in 2015 by [Postgres Professional](https://postgrespro.ru/) team - coded by [Aleksander Alekseev](http://eax.me/), ideas and code review by [Alexander Korotkov](http://akorotkov.github.io/) and [Teodor Sigaev](http://www.sigaev.ru/).
+ZSON was originally created in 2015 by [Postgres Professional](https://postgrespro.ru/) team - coded by [Aleksander Alekseev](http://eax.me/), idea / code review / etc by [Alexander Korotkov](http://akorotkov.github.io/) and [Teodor Sigaev](http://www.sigaev.ru/).
 
 ## Install
 
