@@ -7,10 +7,6 @@
 #include <limits.h>
 #include <string.h>
 
-// TODO: comments, Asserts. debug logs, pgindent
-// TODO: (?) print size after pglz_compress in zson_info()
-// TODO: (?) implement zson_update_dict() + modify zson_learn
-
 // zson compression:
 //
 // VARHDRSZ
@@ -19,9 +15,9 @@
 // decoded_size [uint32]
 // hint [uint8 x PGLZ_HINT_SIZE]
 // {
-//    skip_bytes [uint8]
-//    ... skip_bytes bytes ...
-//    string_code [uint16], 0 = no_string
+//	skip_bytes [uint8]
+//	... skip_bytes bytes ...
+//	string_code [uint16], 0 = no_string
 // } *
 
 PG_MODULE_MAGIC;
@@ -129,7 +125,7 @@ dict_load(int32 dict_id)
 				SPI_getbinval(SPI_tuptable->vals[row], SPI_tuptable->tupdesc,
 					1, &isnull)
 			);
-		char* word = DatumGetCString(DirectFunctionCall1(textout, 
+		char* word = DatumGetCString(DirectFunctionCall1(textout,
 				SPI_getbinval(SPI_tuptable->vals[row], SPI_tuptable->tupdesc,
 					2, &isnull)
 			));
@@ -231,7 +227,7 @@ dict_get(int32 dict_id)
 	gettimeofday(&tv, NULL);
 
 	// clean cache if necessary
-	
+
 	if(tv.tv_sec - dictList.last_clean_sec > DICT_LIST_CLEAN_INTERVAL_SEC)
 	{
 		DictListItem* prev_dict_list_item = NULL;
@@ -239,11 +235,11 @@ dict_get(int32 dict_id)
 		while(dict_list_item)
 		{
 			if(dict_list_item->pdict &&
-				(tv.tv_sec - dict_list_item->last_used_sec > 
+				(tv.tv_sec - dict_list_item->last_used_sec >
 					DICT_LIST_TTL_SEC))
 			{
 				DictListItem* temp = dict_list_item->next;
-	
+
 				dict_free(dict_list_item->pdict);
 				free(dict_list_item);
 
@@ -261,7 +257,7 @@ dict_get(int32 dict_id)
 	}
 
 	// find an item
-	
+
 	while(dict_list_item)
 	{
 		if(dict_list_item->pdict &&
@@ -332,7 +328,7 @@ get_current_dict_id()
 	cachedDictId = id;
 	cachedDictIdLastUpdatedSec = tv.tv_sec;
 	return id;
-} 
+}
 
 // cstring -> zson
 Datum
@@ -359,7 +355,7 @@ zson_out(PG_FUNCTION_ARGS)
 inline static Size
 zson_fastcompress_bound(Size size)
 {
-	return PGLZ_HINT_SIZE + (size / 2 + 1)*3; 
+	return PGLZ_HINT_SIZE + (size / 2 + 1)*3;
 }
 
 static bool
@@ -388,7 +384,7 @@ zson_fastcompress(const Dict* pdict,
 			encoded_data[outoffset] = src_data[inoffset];
 			outoffset++;
 			inoffset++;
-			
+
 			if(skipbytes == 255)
 			{
 				encoded_data[outskipoffset] = skipbytes;
@@ -451,7 +447,7 @@ zson_fastdecompress(const Dict* pdict,
 			break; /* end of input - its OK */
 
 		if(2 > encoded_size - inoffset)
-			return false; 
+			return false;
 
 		code = (uint16)encoded_data[inoffset++];
 		code = (code << 8) | (uint16)encoded_data[inoffset++];
@@ -493,12 +489,12 @@ jsonb_to_zson(PG_FUNCTION_ARGS)
 
 	if(dict_id < 0)
 		ereport(ERROR,
-            (
-             errcode(ERRCODE_INTERNAL_ERROR),
-             errmsg("Unable to compress jsonb"),
-             errdetail("zson_dict is not initialized"),
-             errhint("You probably forgot to execute zson_learn()")
-            ));
+			(
+			 errcode(ERRCODE_INTERNAL_ERROR),
+			 errmsg("Unable to compress jsonb"),
+			 errdetail("zson_dict is not initialized"),
+			 errhint("You probably forgot to execute zson_learn()")
+			));
 
 	pdict = dict_get(dict_id);
 	if(pdict == NULL)
@@ -518,12 +514,12 @@ jsonb_to_zson(PG_FUNCTION_ARGS)
 			encoded_data, &encoded_size);
 	if(!res)
 		ereport(ERROR,
-            (
-             errcode(ERRCODE_INTERNAL_ERROR),
-             errmsg("Unable to compress jsonb"),
-             errdetail("Procedure fastcompress() returned %d", res),
-             errhint("You probably should report this to pgsql-bugs@")
-            ));
+			(
+			 errcode(ERRCODE_INTERNAL_ERROR),
+			 errmsg("Unable to compress jsonb"),
+			 errdetail("Procedure fastcompress() returned %d", res),
+			 errhint("You probably should report this to pgsql-bugs@")
+			));
 
 	encoded_size += VARHDRSZ + ZSON_HEADER_SIZE;
 
@@ -550,14 +546,14 @@ zson_to_jsonb(PG_FUNCTION_ARGS)
 
 	if(zson_version > ZSON_CURRENT_VERSION)
 		ereport(ERROR,
-            (
-             errcode(ERRCODE_INTERNAL_ERROR),
-             errmsg("Unsupported zson version"),
-             errdetail("Saved zson version is %d, extension version is %d",
-             	zson_version, ZSON_CURRENT_VERSION),
-             errhint("You probably should upgrade zson extension "
-             			"or report a bug to pgsql-bugs@")
-            ));
+			(
+			 errcode(ERRCODE_INTERNAL_ERROR),
+			 errmsg("Unsupported zson version"),
+			 errdetail("Saved zson version is %d, extension version is %d",
+			 	zson_version, ZSON_CURRENT_VERSION),
+			 errhint("You probably should upgrade zson extension "
+			 			"or report a bug to pgsql-bugs@")
+			));
 
 	dict_id = ZSON_HEADER_DICT_VERSION(encoded_header);
 	decoded_size = ZSON_HEADER_DECODED_SIZE(encoded_header);
@@ -574,12 +570,12 @@ zson_to_jsonb(PG_FUNCTION_ARGS)
 
 	if(!res)
 		ereport(ERROR,
-            (
-             errcode(ERRCODE_INTERNAL_ERROR),
-             errmsg("Unable to uncompress zson"),
-             errdetail("Procedure fastdecompress() returned %d", res),
-             errhint("You probably should report this to pgsql-bugs@")
-            ));
+			(
+			 errcode(ERRCODE_INTERNAL_ERROR),
+			 errmsg("Unable to uncompress zson"),
+			 errdetail("Procedure fastdecompress() returned %d", res),
+			 errhint("You probably should report this to pgsql-bugs@")
+			));
 
 	decoded_size += VARHDRSZ;
 	SET_VARSIZE(jsonb, decoded_size);
@@ -591,7 +587,7 @@ Datum
 zson_info(PG_FUNCTION_ARGS)
 {
 	bytea* zson = PG_GETARG_BYTEA_P(0);
-	
+
 	Size zson_size = VARSIZE(zson);
 	uint8* zson_header = (uint8*)VARDATA(zson);
 	uint32 zson_version = ZSON_HEADER_VERSION(zson_header);
