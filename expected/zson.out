@@ -42,14 +42,14 @@ SELECT zson_learn('{{"nocompress", "x"}}');
  Done! Run " select * from zson_dict where dict_id = 0; " to see a dictionary.
 (1 row)
 
-SELECT * FROM zson_dict;
- dict_id | word_id |    word     
----------+---------+-------------
-       0 |       1 | Roles
-       0 |       2 | ModifyIndex
-       0 |       3 | IP
-       0 |       4 | slave
-       0 |       5 | master
+SELECT dict_id, word FROM zson_dict ORDER BY dict_id, word;
+ dict_id |    word     
+---------+-------------
+       0 | IP
+       0 | master
+       0 | ModifyIndex
+       0 | Roles
+       0 | slave
 (5 rows)
 
 SELECT zson_learn('{{"nocompress", "x"}}', 10000, 1, 128, 1);
@@ -58,26 +58,26 @@ SELECT zson_learn('{{"nocompress", "x"}}', 10000, 1, 128, 1);
  Done! Run " select * from zson_dict where dict_id = 1; " to see a dictionary.
 (1 row)
 
-SELECT * FROM zson_dict;
- dict_id | word_id |    word     
----------+---------+-------------
-       0 |       1 | Roles
-       0 |       2 | ModifyIndex
-       0 |       3 | IP
-       0 |       4 | slave
-       0 |       5 | master
-       1 |       1 | Roles
-       1 |       2 | IP
-       1 |       3 | ModifyIndex
-       1 |       4 | master
-       1 |       5 | slave
-       1 |       6 | 10.0.0.1
-       1 |       7 | array
-       1 |       8 | 10.0.0.2
-       1 |       9 | aaa
-       1 |      10 | some
-       1 |      11 | dummy
-       1 |      12 | 10.0.0.3
+SELECT dict_id, word FROM zson_dict ORDER BY dict_id, word;
+ dict_id |    word     
+---------+-------------
+       0 | IP
+       0 | master
+       0 | ModifyIndex
+       0 | Roles
+       0 | slave
+       1 | 10.0.0.1
+       1 | 10.0.0.2
+       1 | 10.0.0.3
+       1 | aaa
+       1 | array
+       1 | dummy
+       1 | IP
+       1 | master
+       1 | ModifyIndex
+       1 | Roles
+       1 | slave
+       1 | some
 (17 rows)
 
 SELECT '{"aaa": "ololo"}'::zson;
@@ -94,11 +94,27 @@ SELECT '{"aaa": "ololo"}'::zson -> 'aaa';
 
 CREATE TABLE zson_test(x zson);
 INSERT INTO zson_test VALUES('{"aaa":123}' :: jsonb);
-SELECT * FROM zson_test;
-      x       
---------------
- {"aaa": 123}
-(1 row)
+SELECT dict_id, word FROM zson_dict ORDER BY dict_id, word;
+ dict_id |    word     
+---------+-------------
+       0 | IP
+       0 | master
+       0 | ModifyIndex
+       0 | Roles
+       0 | slave
+       1 | 10.0.0.1
+       1 | 10.0.0.2
+       1 | 10.0.0.3
+       1 | aaa
+       1 | array
+       1 | dummy
+       1 | IP
+       1 | master
+       1 | ModifyIndex
+       1 | Roles
+       1 | slave
+       1 | some
+(17 rows)
 
 SELECT x :: jsonb FROM zson_test;
       x       

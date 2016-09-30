@@ -25,11 +25,11 @@ INSERT INTO nocompress VALUES
 
 SELECT zson_learn('{{"nocompress", "x"}}');
 
-SELECT * FROM zson_dict;
+SELECT dict_id, word FROM zson_dict ORDER BY dict_id, word;
 
 SELECT zson_learn('{{"nocompress", "x"}}', 10000, 1, 128, 1);
 
-SELECT * FROM zson_dict;
+SELECT dict_id, word FROM zson_dict ORDER BY dict_id, word;
 
 SELECT '{"aaa": "ololo"}'::zson;
 
@@ -39,7 +39,7 @@ CREATE TABLE zson_test(x zson);
 
 INSERT INTO zson_test VALUES('{"aaa":123}' :: jsonb);
 
-SELECT * FROM zson_test;
+SELECT dict_id, word FROM zson_dict ORDER BY dict_id, word;
 
 SELECT x :: jsonb FROM zson_test;
 
