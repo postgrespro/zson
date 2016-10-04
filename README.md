@@ -6,7 +6,7 @@ ZSON is a PostgreSQL extension for transparent JSONB compression. Compression is
 
 ZSON was originally created in 2016 by [Postgres Professional](https://postgrespro.ru/) team: researched and coded by [Aleksander Alekseev](http://eax.me/); ideas, code review, testing, etc by [Alexander Korotkov](http://akorotkov.github.io/) and [Teodor Sigaev](http://www.sigaev.ru/).
 
-See also discussions on [Hacker News](https://news.ycombinator.com/item?id=12633486) and [Reddit](https://www.reddit.com/r/PostgreSQL/comments/55mr4r/zson_postgresql_extension_for_transparent_jsonb/).
+See also discussions on [psql-general@](https://www.postgresql.org/message-id/20160930185801.38654a1c%40e754), [Hacker News](https://news.ycombinator.com/item?id=12633486) and [Reddit](https://www.reddit.com/r/PostgreSQL/comments/55mr4r/zson_postgresql_extension_for_transparent_jsonb/).
 
 ## Install
 
