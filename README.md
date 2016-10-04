@@ -2,7 +2,9 @@
 
 ## About
 
-ZSON is a PostgreSQL extension for transparent JSONB compression. Compression is based on a shared dictionary of strings most frequently used in specific JSONB documents (not only keys, but also values, array elements, etc). ZSON allows to safe ~ 50% of disk space and gain more TPS because of lower I/O. Memory is saved as well.
+ZSON is a PostgreSQL extension for transparent JSONB compression. Compression is based on a shared dictionary of strings most frequently used in specific JSONB documents (not only keys, but also values, array elements, etc). 
+
+In some cases ZSON can save half of your disk space and give you about 10% more TPS. Memory is saved as well. Everything depends on your data and workload though. Don't believe any benchmarks, re-check everything on your data, configuration, hardware, workload, PostgreSQL version, etc. See [docs/benchmark.md](docs/benchmark.md).
 
 ZSON was originally created in 2016 by [Postgres Professional](https://postgrespro.ru/) team: researched and coded by [Aleksander Alekseev](http://eax.me/); ideas, code review, testing, etc by [Alexander Korotkov](http://akorotkov.github.io/) and [Teodor Sigaev](http://www.sigaev.ru/).
 
@@ -137,8 +139,3 @@ select pg_table_size('tt') / (select count(*) from tt)
 
 However, developers usually know when they change a schema significantly. It's also easy to re-check whether current schema differs a lot from the original using zson_dict table.
 
-## Benchmark
-
-**TL;DR** In some cases ZSON can save half of your disk space and give you about 10% more TPS. Memory is saved as well. Everything depends on your data and workload though. Don't believe any benchmarks, re-check everything on your data, configuration, hardware, workload, PostgreSQL version, etc. 
-
-See [docs/benchmark.md](docs/benchmark.md).
