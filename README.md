@@ -6,6 +6,8 @@ ZSON is a PostgreSQL extension for transparent JSONB compression. Compression is
 
 ZSON was originally created in 2016 by [Postgres Professional](https://postgrespro.ru/) team: researched and coded by [Aleksander Alekseev](http://eax.me/); ideas, code review, testing, etc by [Alexander Korotkov](http://akorotkov.github.io/) and [Teodor Sigaev](http://www.sigaev.ru/).
 
+See also [discussion on Reddit](https://www.reddit.com/r/PostgreSQL/comments/55mr4r/zson_postgresql_extension_for_transparent_jsonb/).
+
 ## Install
 
 Build and install ZSON:
@@ -120,6 +122,20 @@ delete from zson_dict where dict_id = 0;
 ```
 
 In general it's safer to keep old dictionaries just in case. A few KB of disk space don't worth the risk of losing data.
+
+## When it's a time to re-learn?
+
+Unfortunately, it's hard to recommend a general approach.
+
+A good heuristic could be:
+
+```
+select pg_table_size('tt') / (select count(*) from tt)
+```
+
+... i.e. average document size. When it suddenly starts to grow it's time to re-learn.
+
+However, developers usually know when they change a schema significantly. It's also easy to re-check whether current schema differs a lot from the original using zson_dict table.
 
 ## Benchmark
 
