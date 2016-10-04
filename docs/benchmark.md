@@ -1,4 +1,4 @@
-## Benchmark
+# Benchmark
 
 **Disclaimer**: Synthetic benchmarks could not be trusted. Re-check everything on specific hardware, configuration, data and workload!
 
