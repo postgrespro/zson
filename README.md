@@ -72,7 +72,7 @@ zson_learn(
 Example:
 
 ```
-select zson_learn('{{"table1", "row1"}, {"table2", "row2"}}');
+select zson_learn('{{"table1", "col1"}, {"table2", "col2"}}');
 ```
 
 You can create a temporary table and write some common JSONB documents to it manually or use existing tables. The idea is to provide a subset of real data. Lets say some document *type* is twice as frequent as some other document type. ZSON expects that there will be twice more documents of the first type than of the second in a learning set.
@@ -102,7 +102,7 @@ zson_test=# select x -> 'aaa' from zson_example;
 When schema of JSONB documents evolve ZSON could be *re-learned*:
 
 ```
-select zson_learn('{{"table1", "row1"}, {"table2", "row2"}}');
+select zson_learn('{{"table1", "col1"}, {"table2", "col2"}}');
 ```
 
 This time *second* dictionary will be created. Dictionaries are cached in memory so it will take about a minute before ZSON realizes that there is a new dictionary. After that old documents will be decompressed using old dictionary and new documents will be compressed and decompressed using new dictionary.
