@@ -1,6 +1,6 @@
 # ZSON
 
-![ZSON Logo](img/zson-logo.png?1475830630)
+![ZSON Logo](img/zson-logo.png?20161007141835)
 
 ## About
 
