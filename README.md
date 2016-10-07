@@ -1,5 +1,7 @@
 # ZSON
 
+![ZSON Logo](img/zson-logo.png)
+
 ## About
 
 ZSON is a PostgreSQL extension for transparent JSONB compression. Compression is based on a shared dictionary of strings most frequently used in specific JSONB documents (not only keys, but also values, array elements, etc).
