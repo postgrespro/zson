@@ -10,7 +10,7 @@ In some cases ZSON can save half of your disk space and give you about 10% more 
 
 ZSON was originally created in 2016 by [Postgres Professional](https://postgrespro.ru/) team: researched and coded by [Aleksander Alekseev](http://eax.me/); ideas, code review, testing, etc by [Alexander Korotkov](http://akorotkov.github.io/) and [Teodor Sigaev](http://www.sigaev.ru/).
 
-See also discussions on [pgsql-general@](https://www.postgresql.org/message-id/flat/20160930185801.38654a1c%40e754), [Hacker News](https://news.ycombinator.com/item?id=12633486), [Reddit](https://www.reddit.com/r/PostgreSQL/comments/55mr4r/zson_postgresql_extension_for_transparent_jsonb/) and [HabdraHabr](https://habrahabr.ru/company/postgrespro/blog/312006/).
+See also discussions on [pgsql-general@](https://www.postgresql.org/message-id/flat/20160930185801.38654a1c%40e754), [Hacker News](https://news.ycombinator.com/item?id=12633486), [Reddit](https://www.reddit.com/r/PostgreSQL/comments/55mr4r/zson_postgresql_extension_for_transparent_jsonb/) and [HabraHabr](https://habrahabr.ru/company/postgrespro/blog/312006/).
 
 ## Install
 
