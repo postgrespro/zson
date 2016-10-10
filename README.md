@@ -125,7 +125,7 @@ If **all** ZSON documents are migrated to new dictionary the old one could be sa
 delete from zson_dict where dict_id = 0;
 ```
 
-In general it's safer to keep old dictionaries just in case. A few KB of disk space don't worth the risk of losing data.
+In general it's safer to keep old dictionaries just in case. Gaining a few KB of disk space is not worth the risk of losing data.
 
 ## When it's a time to re-learn?
 
