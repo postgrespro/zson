@@ -45,15 +45,18 @@ BEGIN
         ELSIF position('"' in colname) <> 0 THEN
             RAISE NOTICE 'Invalid column name %', tabname;
             RETURN '';
+		ELSIF position('.' in tabname) <> 0 THEN
+        	tabname := quote_ident(split_part(tabname, '.', 1)) ||'.' || quote_ident(split_part(tabname, '.', 2));
         END IF;
 
         IF query <> '' THEN
             query := query || ' union all ';
         END IF;
 
-        query := query || '( select unnest(zson_extract_strings("' ||
-                    colname || '")) as t from "' || tabname || '" limit ' ||
+		query := query || '( select unnest(zson_extract_strings(' ||
+                    quote_ident(colname) || ')) as t from ' || tabname || ' limit ' ||
                     max_examples || ')';
+
     END LOOP;
 
     select coalesce(max(dict_id), -1) INTO next_dict_id from zson_dict;
