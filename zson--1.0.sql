@@ -53,7 +53,7 @@ BEGIN
             query := query || ' union all ';
         END IF;
 
-		query := query || '( select unnest(zson_extract_strings(' ||
+        query := query || '( select unnest(zson_extract_strings(' ||
                     quote_ident(colname) || ')) as t from ' || tabname || ' limit ' ||
                     max_examples || ')';
 
