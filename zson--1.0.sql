@@ -45,8 +45,9 @@ BEGIN
         ELSIF position('"' in colname) <> 0 THEN
             RAISE NOTICE 'Invalid column name %', tabname;
             RETURN '';
-		ELSIF position('.' in tabname) <> 0 THEN
-        	tabname := quote_ident(split_part(tabname, '.', 1)) ||'.' || quote_ident(split_part(tabname, '.', 2));
+        ELSIF position('.' in tabname) <> 0 THEN
+            tabname := quote_ident(split_part(tabname, '.', 1)) ||
+                '.' || quote_ident(split_part(tabname, '.', 2));
         END IF;
 
         IF query <> '' THEN
