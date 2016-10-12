@@ -60,8 +60,7 @@ BEGIN
 
     END LOOP;
 
-    select coalesce(max(dict_id), -1) INTO next_dict_id from zson_dict;
-    next_dict_id := next_dict_id + 1;
+    select coalesce(max(dict_id), -1) + 1 INTO next_dict_id from zson_dict;
 
     query := 'select t from (select t, count(*) as sum from ( ' ||
         query || ' ) as tt group by t) as s where length(t) >= ' ||
