@@ -1,4 +1,4 @@
 comment = 'ZSON'
 default_version = '1.0'
 module_pathname = '$libdir/zson'
-relocatable = true
+relocatable = false
