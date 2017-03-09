@@ -4,6 +4,7 @@
 #include <executor/spi.h>
 #include <utils/builtins.h>
 #include <utils/jsonb.h>
+#include <sys/time.h>
 #include <limits.h>
 #include <string.h>
 
