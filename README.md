@@ -57,7 +57,7 @@ sudo make uninstall
 
 ## Usage
 
-First ZSON should be *trained* on common data using zson_learn procedure:
+First ZSON should be *trained* on common data using zson\_learn procedure:
 
 ```
 zson_learn(
@@ -107,7 +107,7 @@ select zson_learn('{{"table1", "col1"}, {"table2", "col2"}}');
 
 This time *second* dictionary will be created. Dictionaries are cached in memory so it will take about a minute before ZSON realizes that there is a new dictionary. After that old documents will be decompressed using the old dictionary and new documents will be compressed and decompressed using the new dictionary.
 
-To find out which dictionary is used for a given ZSON document use zson_info procedure:
+To find out which dictionary is used for a given ZSON document use zson\_info procedure:
 
 ```
 zson_test=# select zson_info(x) from test_compress where id = 1;
@@ -139,5 +139,5 @@ select pg_table_size('tt') / (select count(*) from tt)
 
 ... i.e. average document size. When it suddenly starts to grow it's time to re-learn.
 
-However, developers usually know when they change a schema significantly. It's also easy to re-check whether current schema differs a lot from the original using zson_dict table.
+However, developers usually know when they change a schema significantly. It's also easy to re-check whether current schema differs a lot from the original using zson\_dict table.
 
