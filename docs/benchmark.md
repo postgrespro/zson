@@ -319,9 +319,9 @@ tps = 1086.396431 (excluding connections establishing)
 
 In this case ZSON gives about 11.8% more TPS.
 
-We can modify compress.pgbench and nocompress.pgbench so only documents with id in between of 1 and 3000 will be requested. It will simulate a case when all data *does* fit into memory. In this case we see 141K TPS (JSONB) vs 134K TPS (ZSON) which is 5% slower.
+We can modify compress.pgbench and nocompress.pgbench so only the documents with id between 1 and 3000 will be requested. It will simulate a case when all data *does* fit into memory. In this case we see 141K TPS (JSONB) vs 134K TPS (ZSON) which is 5% slower.
 
-Compression ratio could be different depending on documents, database schema, number of rows, etc. But in general ZSON compression is much better than build-in PostgreSQL compression (PGLZ):
+The compression ratio could be different depending on the documents, the database schema, the number of rows, etc. But in general ZSON compression is much better than build-in PostgreSQL compression (PGLZ):
 
 ```
    before   |   after    |      ratio       

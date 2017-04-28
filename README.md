@@ -75,7 +75,7 @@ Example:
 select zson_learn('{{"table1", "col1"}, {"table2", "col2"}}');
 ```
 
-You can create a temporary table and write some common JSONB documents to it manually or use existing tables. The idea is to provide a subset of real data. Lets say some document *type* is twice as frequent as some other document type. ZSON expects that there will be twice more documents of the first type than of the second in a learning set.
+You can create a temporary table and write some common JSONB documents to it manually or use existing tables. The idea is to provide a subset of real data. Lets say some document *type* is twice as frequent as some other document type. ZSON expects that there will be twice as many documents of the first type as those of the second one in a learning set.
 
 Resulting dictionary could be examined using this query:
 
@@ -97,7 +97,7 @@ zson_test=# select x -> 'aaa' from zson_example;
 ?column? | 123
 ```
 
-## Migrating to new dictionary
+## Migrating to a new dictionary
 
 When schema of JSONB documents evolve ZSON could be *re-learned*:
 
@@ -105,9 +105,9 @@ When schema of JSONB documents evolve ZSON could be *re-learned*:
 select zson_learn('{{"table1", "col1"}, {"table2", "col2"}}');
 ```
 
-This time *second* dictionary will be created. Dictionaries are cached in memory so it will take about a minute before ZSON realizes that there is a new dictionary. After that old documents will be decompressed using old dictionary and new documents will be compressed and decompressed using new dictionary.
+This time *second* dictionary will be created. Dictionaries are cached in memory so it will take about a minute before ZSON realizes that there is a new dictionary. After that old documents will be decompressed using the old dictionary and new documents will be compressed and decompressed using the new dictionary.
 
-To find out which dictionary is used for given ZSON document use zson_info procedure:
+To find out which dictionary is used for a given ZSON document use zson_info procedure:
 
 ```
 zson_test=# select zson_info(x) from test_compress where id = 1;
@@ -119,7 +119,7 @@ zson_test=# select zson_info(x) from test_compress where id = 2;
 zson_info | zson version = 0, dict version = 0, ...
 ```
 
-If **all** ZSON documents are migrated to new dictionary the old one could be safely removed:
+If **all** ZSON documents are migrated to the new dictionary the old one could be safely removed:
 
 ```
 delete from zson_dict where dict_id = 0;
