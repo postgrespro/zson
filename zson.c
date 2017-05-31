@@ -494,7 +494,7 @@ jsonb_to_zson(PG_FUNCTION_ARGS)
 			 errcode(ERRCODE_INTERNAL_ERROR),
 			 errmsg("Unable to compress jsonb"),
 			 errdetail("zson_dict is not initialized"),
-			 errhint("You probably forgot to execute zson_learn()")
+			 errhint("You probably forgot to execute zson_learn(). In case you are restoring from a backup made via pg_dump, just move the content of zson_dict table above the current line.")
 			));
 
 	pdict = dict_get(dict_id);

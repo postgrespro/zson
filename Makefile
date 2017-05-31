@@ -1,6 +1,6 @@
 EXTENSION = zson
 MODULES = zson
-DATA = zson--1.0.sql
+DATA = zson--1.0.sql zson--1.0--1.1.sql
 OBJS = zson.o
 REGRESS = zson
 
