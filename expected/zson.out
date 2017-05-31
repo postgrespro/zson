@@ -42,13 +42,13 @@ SELECT zson_learn('{{"nocompress", "x"}}');
  Done! Run " select * from zson_dict where dict_id = 0; " to see a dictionary.
 (1 row)
 
-SELECT dict_id, word FROM zson_dict ORDER BY dict_id, word;
+SELECT dict_id, word FROM zson_dict ORDER BY dict_id, word COLLATE "C";
  dict_id |    word     
 ---------+-------------
        0 | IP
-       0 | master
        0 | ModifyIndex
        0 | Roles
+       0 | master
        0 | slave
 (5 rows)
 
@@ -58,24 +58,24 @@ SELECT zson_learn('{{"nocompress", "x"}}', 10000, 1, 128, 1);
  Done! Run " select * from zson_dict where dict_id = 1; " to see a dictionary.
 (1 row)
 
-SELECT dict_id, word FROM zson_dict ORDER BY dict_id, word;
+SELECT dict_id, word FROM zson_dict ORDER BY dict_id, word COLLATE "C";
  dict_id |    word     
 ---------+-------------
        0 | IP
-       0 | master
        0 | ModifyIndex
        0 | Roles
+       0 | master
        0 | slave
        1 | 10.0.0.1
        1 | 10.0.0.2
        1 | 10.0.0.3
+       1 | IP
+       1 | ModifyIndex
+       1 | Roles
        1 | aaa
        1 | array
        1 | dummy
-       1 | IP
        1 | master
-       1 | ModifyIndex
-       1 | Roles
        1 | slave
        1 | some
 (17 rows)
@@ -94,24 +94,24 @@ SELECT '{"aaa": "ololo"}'::zson -> 'aaa';
 
 CREATE TABLE zson_test(x zson);
 INSERT INTO zson_test VALUES('{"aaa":123}' :: jsonb);
-SELECT dict_id, word FROM zson_dict ORDER BY dict_id, word;
+SELECT dict_id, word FROM zson_dict ORDER BY dict_id, word COLLATE "C";
  dict_id |    word     
 ---------+-------------
        0 | IP
-       0 | master
        0 | ModifyIndex
        0 | Roles
+       0 | master
        0 | slave
        1 | 10.0.0.1
        1 | 10.0.0.2
        1 | 10.0.0.3
+       1 | IP
+       1 | ModifyIndex
+       1 | Roles
        1 | aaa
        1 | array
        1 | dummy
-       1 | IP
        1 | master
-       1 | ModifyIndex
-       1 | Roles
        1 | slave
        1 | some
 (17 rows)
