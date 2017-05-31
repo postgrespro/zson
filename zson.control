@@ -1,4 +1,4 @@
-comment = 'ZSON'
+comment = 'ZSON: an extension for transparent JSONB compression'
 default_version = '1.0'
 module_pathname = '$libdir/zson'
 relocatable = false
