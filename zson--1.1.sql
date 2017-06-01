@@ -10,6 +10,8 @@ CREATE TABLE zson_dict (
     PRIMARY KEY(dict_id, word_id)
 );
 
+SELECT pg_catalog.pg_extension_config_dump('zson_dict', '');
+
 -- Usage: select zson_learn('{{"table1", "col1"}, {"table2", "col2"}, ... }');
 CREATE FUNCTION zson_learn(
     tables_and_columns text[][],
