@@ -1,6 +1,7 @@
 # Benchmark
 
-**Disclaimer**: Synthetic benchmarks could not be trusted. Re-check everything on specific hardware, configuration, data and workload!
+**Disclaimer**: Synthetic benchmarks could not be trusted. Re-check everything
+on specific hardware, configuration, data and workload!
 
 We used the following server:
 
@@ -9,7 +10,8 @@ We used the following server:
 * HDD
 * swap is off
 
-To simulate scenario when database doesn't fit into memory we used `stress`:
+To simulate the scenario when a database doesn't fit into the memory we used
+`stress`:
 
 ```
 sudo stress --vm-bytes 21500m --vm-keep -m 1 --vm-hang 0
@@ -319,9 +321,14 @@ tps = 1086.396431 (excluding connections establishing)
 
 In this case ZSON gives about 11.8% more TPS.
 
-We can modify compress.pgbench and nocompress.pgbench so only the documents with id between 1 and 3000 will be requested. It will simulate a case when all data *does* fit into memory. In this case we see 141K TPS (JSONB) vs 134K TPS (ZSON) which is 5% slower.
+We can modify compress.pgbench and nocompress.pgbench so only the documents with
+id between 1 and 3000 will be requested. It will simulate a case when all the
+data *does* fits into the memory. In this case we see 141K TPS (JSONB) vs 134K
+TPS (ZSON) which is 5% slower.
 
-The compression ratio could be different depending on the documents, the database schema, the number of rows, etc. But in general ZSON compression is much better than build-in PostgreSQL compression (PGLZ):
+The compression ratio could be different depending on the documents, the
+database schema, the number of rows, etc. But in general ZSON compression is
+much better than build-in PostgreSQL compression (PGLZ):
 
 ```
    before   |   after    |      ratio       
@@ -339,4 +346,6 @@ The compression ratio could be different depending on the documents, the databas
  14204420096 | 9832841216 | 0.692238130775149
 ```
 
-Not only disk space is saved. Data loaded to shared buffers is not decompressed. It means that memory is also saved and more data could be accessed without loading it from the disk.
+Not only is the disk space saved, but the data loaded to shared buffers is not
+decompressed.  It means that memory is also saved and more data could be
+accessed without loading it from the disk.
