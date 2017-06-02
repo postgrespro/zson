@@ -21,7 +21,7 @@ etc by [Alexander Korotkov][ak] and [Teodor Sigaev][ts].
 [me]: http://eax.me/
 [ak]: http://akorotkov.github.io/
 [ts]: http://www.sigaev.ru/
-[pgpro]: https://postgrespro.ru/
+[pgpro]: https://postgrespro.com/
 
 See also discussions on [pgsql-general@][gen], [Hacker News][hn], [Reddit][rd]
 and [HabraHabr][habr].
