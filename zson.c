@@ -30,6 +30,12 @@ PG_FUNCTION_INFO_V1(jsonb_to_zson);
 PG_FUNCTION_INFO_V1(zson_info);
 PG_FUNCTION_INFO_V1(debug_dump_jsonb);
 
+/* In version 11 these macros have been changed */
+#if PG_VERSION_NUM < 110000
+#define PG_GETARG_JSONB_P(v) PG_GETARG_JSONB(v)
+#define PG_RETURN_JSONB_P(v) PG_RETURN_JSONB(v)
+#endif
+
 #define ZSON_CURRENT_VERSION 0
 
 #define ZSON_HEADER_SIZE (sizeof(uint8) + sizeof(uint32)*2)
@@ -477,7 +483,7 @@ zson_fastdecompress(const Dict* pdict,
 Datum
 jsonb_to_zson(PG_FUNCTION_ARGS)
 {
-	Jsonb	*jsonb = PG_GETARG_JSONB(0);
+	Jsonb	*jsonb = PG_GETARG_JSONB_P(0);
 	uint8* jsonb_data = (uint8*)VARDATA(jsonb);
 	Size jsonb_data_size = VARSIZE(jsonb) - VARHDRSZ;
 	uint8 *encoded_buff, *encoded_header, *encoded_data;
@@ -580,7 +586,7 @@ zson_to_jsonb(PG_FUNCTION_ARGS)
 
 	decoded_size += VARHDRSZ;
 	SET_VARSIZE(jsonb, decoded_size);
-	PG_RETURN_JSONB(jsonb);
+	PG_RETURN_JSONB_P(jsonb);
 }
 
 // zson -> "size, encoded size, other info"
