@@ -18,8 +18,8 @@ ZSON was originally created in 2016 by [Postgres Professional][pgpro] team:
 researched and coded by [Aleksander Alekseev][me]; ideas, code review, testing,
 etc by [Alexander Korotkov][ak] and [Teodor Sigaev][ts].
 
-[me]: http://eax.me/
-[ak]: http://akorotkov.github.io/
+[me]: https://eax.me/
+[ak]: https://akorotkov.github.io/
 [ts]: http://www.sigaev.ru/
 [pgpro]: https://postgrespro.com/
 
@@ -29,7 +29,7 @@ and [HabraHabr][habr].
 [gen]: https://www.postgresql.org/message-id/flat/20160930185801.38654a1c%40e754
 [hn]: https://news.ycombinator.com/item?id=12633486
 [rd]: https://www.reddit.com/r/PostgreSQL/comments/55mr4r/zson_postgresql_extension_for_transparent_jsonb/
-[habr]: https://habrahabr.ru/company/postgrespro/blog/312006/
+[habr]: https://habr.com/ru/company/postgrespro/blog/312006/
 
 ## Install
 
