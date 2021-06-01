@@ -530,7 +530,7 @@ jsonb_to_zson(PG_FUNCTION_ARGS)
 
 	encoded_size += VARHDRSZ + ZSON_HEADER_SIZE;
 
-	repalloc(encoded_buff, encoded_size);
+	encoded_buff = repalloc(encoded_buff, encoded_size);
 	SET_VARSIZE(encoded_buff, encoded_size);
 	PG_RETURN_BYTEA_P(encoded_buff);
 }
