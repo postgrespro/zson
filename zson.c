@@ -479,7 +479,7 @@ zson_fastdecompress(const Dict* pdict,
 	return true;
 }
 
-// jsonb -> zson, no compression version
+// jsonb -> zson
 Datum
 jsonb_to_zson(PG_FUNCTION_ARGS)
 {
@@ -535,7 +535,7 @@ jsonb_to_zson(PG_FUNCTION_ARGS)
 	PG_RETURN_BYTEA_P(encoded_buff);
 }
 
-// zson -> jsonb, no compression version
+// zson -> jsonb
 Datum
 zson_to_jsonb(PG_FUNCTION_ARGS)
 {
