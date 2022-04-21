@@ -200,8 +200,14 @@ dict_find_match(const Dict* pdict,
 		size_t nbytes = pdict->words[current].nbytes;
 
 		if(nbytes > buff_size)
-			res = 1; // current is greater
-		else
+		{
+			/* current can be less or greater depending on the prefix */
+			res = memcmp(pdict->words[current].word, buff, buff_size);
+
+			/* if prefixes match, current is greater */
+			if(res == 0)
+				res = 1;
+		} else
 			res = memcmp(pdict->words[current].word, buff, nbytes);
 
 		if(res == 0) // match
