@@ -362,7 +362,7 @@ zson_out(PG_FUNCTION_ARGS)
 	Datum zson_datum = PointerGetDatum(zson_bytea);
 	Datum jsonb_datum = DirectFunctionCall1(zson_to_jsonb, zson_datum);
 	Datum string_datum = DirectFunctionCall1(jsonb_out, jsonb_datum);
-	PG_RETURN_CSTRING(string_datum);
+	PG_RETURN_CSTRING(DatumGetCString(string_datum));
 }
 
 inline static Size
@@ -617,7 +617,7 @@ zson_info(PG_FUNCTION_ARGS)
 		(uint32)zson_size, (float)zson_size*100/(float)decoded_size
 	);
 
-	PG_RETURN_CSTRING((Datum)string_buff);
+	PG_RETURN_CSTRING(string_buff);
 }
 
 /*
