@@ -109,7 +109,7 @@ dict_load(int32 dict_id)
 	{
 		Oid argtypes[] = { INT4OID };
 		savedPlanLoadDict = SPI_prepare(
-			"select word_id, word from zson_dict where dict_id = $1 "
+			"select word_id, word from public.zson_dict where dict_id = $1 "
 			"order by word",
 			1, argtypes);
 		if(savedPlanLoadDict == NULL)
@@ -322,7 +322,7 @@ get_current_dict_id()
 	if(savedPlanGetDictId == NULL)
 	{
 		savedPlanGetDictId = SPI_prepare(
-			"select max(dict_id) from zson_dict;", 0, NULL);
+			"select max(dict_id) from public.zson_dict;", 0, NULL);
 		if (savedPlanGetDictId == NULL)
 			elog(ERROR, "Error preparing query");
 		if (SPI_keepplan(savedPlanGetDictId))

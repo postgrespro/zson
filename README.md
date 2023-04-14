@@ -175,3 +175,7 @@ However, developers usually know when they change a schema significantly. It's
 also easy to re-check whether the current schema differs a lot from the original
 one using zson\_dict table.
 
+## Open issues
+
+- Intalling the extension in a schema other than `public` is not supported (i.e. `CREATE EXTENSION zson WITH SCHEMA ...`);
+
